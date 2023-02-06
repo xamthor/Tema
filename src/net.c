@@ -20,7 +20,6 @@
 #define HTTP_SUCCESS 	1
 #define HTTP_FAILED	 	0
 #define HTTP_USER_AGENT "Mozilla/5.0 (PLAYSTATION VITA; 1.00)"
-#define NET_POOLSIZE    (16 * 1024)
 
 void netInit() {
 	// psvDebugScreenPrintf("Loading module SCE_SYSMODULE_NET\n");
@@ -28,12 +27,12 @@ void netInit() {
 	
 	// psvDebugScreenPrintf("Running sceNetInit\n");
 	SceNetInitParam netInitParam;
-	int size = 4*1024*1024;
+	int size = (16 * 1024);
 	netInitParam.memory = malloc(size);
 	netInitParam.size = size;
 	netInitParam.flags = 0;
 	sceNetInit(&netInitParam);
-
+    curl_global_init(CURL_GLOBAL_ALL);
 	// psvDebugScreenPrintf("Running sceNetCtlInit\n");
 	sceNetCtlInit();
 }
@@ -58,6 +57,7 @@ void httpInit() {
 }
 
 void httpTerm() {
+    curl_global_cleanup();
 	// psvDebugScreenPrintf("Running sceHttpTerm\n");
 	sceHttpTerm();
 
@@ -66,7 +66,6 @@ void httpTerm() {
 }
 
 void download(const char *url, const char *local_dst) {
-    char full_url[1024];
     CURL *curl;
     CURLcode res;
     FILE *fd;
@@ -74,8 +73,8 @@ void download(const char *url, const char *local_dst) {
     curl = curl_easy_init();
 
     fd = fopen(local_dst, "wb");
-    sprintf(full_url, "Downloading");
-    curl_easy_setopt(curl, CURLOPT_URL, full_url);
+
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     // Set user agent string
     curl_easy_setopt(curl, CURLOPT_USERAGENT, HTTP_USER_AGENT);
     // not sure how to use this when enabled

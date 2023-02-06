@@ -324,13 +324,11 @@ void install_liveareacommontheme() {
     char *file_path = malloc(512 * sizeof(char)); //Es la direccion en el vita donde se descargo el zip
     snprintf(file_path, 512, "ux0:ptmp/%s", file_name);
 
-    //printf("\nDownloading %s...\n", file_name);
     drawText(5, concat("Downloading: ", file_name), white);
-    drawText(12, concat("Downloading File name: ", file_url), white);
-    drawText(14, concat("Downloading File path: ", file_path), white);
+    // drawText(24, concat("Downloading File name: ", file_url), white);
+    // drawText(22, concat("Downloading File path: ", file_path), white);
 
     download(file_url, file_path);
-
 
     char *install_dir = malloc(512 * sizeof(char));//Tiene que estar asi con el corchete o tira error
     char *install_dir2 = malloc(512 * sizeof(char));
@@ -344,14 +342,11 @@ void install_liveareacommontheme() {
                 4] = '\0';//Hago null los ultimos 4 charectes que serian el ".zip" para crear un nombre de carpeta apropiado
     snprintf(install_dir2, 512, "%s/", install_dir);
 
-    //printf("\nInstalling File...\n");
     drawText(7, "Installing Theme...", white);
     installCommonTheme(file_path,
                        "ux0:customtheme/c/common_theme/");//Aqui descomprimo el zip en una carpeta para usarlo
-    //printf("\nDeleting temp files...\n");
     drawText(13, "Deleting temp files...", white);
     sceIoRemove(file_path); //Borro el zip de la carpeta ptmp
-
 
     //Guardo el nuevo tema en la base de datos
     char *sqlinsertquery[256];
@@ -456,7 +451,6 @@ void install_liveareatheme() {
     insert_theme_to_db(sqlinsertquery, sqldeletequery);
 
     drawText(19, "Auto exiting in 5 seconds...", white);
-    //printf("\nAuto exiting in 5 seconds...\n");
 
     sceKernelDelayThread(5 * 1000 * 1000);
     httpTerm();
@@ -532,7 +526,6 @@ void install_vitashelltheme() {
 
     //sceKernelDelayThread(5* 1000*1000);
     drawText(7, "Auto exiting in 5 seconds...", white);
-    //printf("\nAuto exiting in 5 seconds...\n");
 
     sceKernelDelayThread(5 * 1000 * 1000);
     httpTerm();
