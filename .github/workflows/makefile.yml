@@ -1,0 +1,48 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set environment variables
+      run: |
+        echo "export VITASDK=/usr/local/vitasdk" >> $GITHUB_ENV
+        echo "export PATH=$VITASDK/bin:$PATH" >> $GITHUB_ENV
+
+    - name: Clone VitaSDK
+      run: git clone https://github.com/vitasdk/vdpm
+
+    - name: List current directory
+      run: ls
+
+    - name: Change directory
+      run: cd vdpm
+
+    - name: List current directory
+      run: ls
+
+    - name: Show current directory
+      run: pwd
+
+    - name: Run bootstrap script
+      run: ./vdpm/bootstrap-vitasdk.sh
+
+    - name: Install Coreutils, curl, and openssl
+      run: |
+        sudo apt-get install -y coreutils
+        env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" ./vdpm/install-all.sh
+        ./vdpm/vdpm curl
+        ./vdpm/vdpm openssl
+
+    - name: Build
+      run: make
