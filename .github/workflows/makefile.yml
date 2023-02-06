@@ -45,4 +45,4 @@ jobs:
         env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" ./vdpm/vdpm openssl
 
     - name: Build
-      run: make
+      run: env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" make
