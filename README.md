@@ -1,6 +1,6 @@
 # Tema
 
-Tema is a vita application for install live area and Vitashell themes.
+Tema is a vita application for installing live area and Vitashell themes from the repository on [VSTema](https://vstema.com)
 
 ## Installation
 
@@ -9,9 +9,8 @@ Transfer the Tema.vpk file to your vita and install using Vitashell
 
 ## Build and Compile 
 
-Install Vita SDK and VDPM 
+[Install Vita SDK and VDPM ](https://vitasdk.org)
 
-https://vitasdk.org
 
 install the following extra libs 
 
