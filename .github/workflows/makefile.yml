@@ -41,8 +41,8 @@ jobs:
       run: |
         sudo apt-get install -y coreutils
         env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" ./vdpm/install-all.sh
-        ./vdpm/vdpm curl
-        ./vdpm/vdpm openssl
+        env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" ./vdpm/vdpm curl
+        env VITASDK=/usr/local/vitasdk PATH="$VITASDK/bin:$PATH" ./vdpm/vdpm openssl
 
     - name: Build
       run: make
